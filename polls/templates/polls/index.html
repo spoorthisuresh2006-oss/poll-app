@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Polls</title>
+</head>
+<body>
+    {% if question %}
+        <h1>{{ question.question_text }}</h1>
+
+        <form action="{% url 'polls:vote' question.id %}" method="post">
+            {% csrf_token %}
+            {% for choice in question.choice_set.all %}
+                <input type="radio" name="choice" value="{{ choice.id }}">
+                {{ choice.choice_text }} <br>
+            {% endfor %}
+            <br>
+            <input type="submit" value="Vote">
+        </form>
+
+    {% else %}
+        <p>No questions available.</p>
+    {% endif %}
+</body>
+</html>
